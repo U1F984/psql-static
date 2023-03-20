@@ -14,9 +14,7 @@ jobs:
       # ...
       - name: "Build"
         run: |
-          curl https://raw.githubusercontent.com/oufm/packelf/master/packelf.sh > packelf.sh && chmod +x packelf.sh
-          sudo apt-get install -y postgresql-client-15
-          ./packelf.sh /usr/lib/postgresql/15/bin/psql psql-static
+          bash ./build.sh
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
