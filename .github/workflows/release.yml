@@ -1,0 +1,28 @@
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      # ...
+      - name: "Build"
+        run: |
+          curl https://raw.githubusercontent.com/oufm/packelf/master/packelf.sh > packelf.sh && chmod +x packelf.sh
+          sudo apt-get install -y postgresql-client-15
+          ./packelf.sh /usr/lib/postgresql/15/bin/psql psql-static
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            psql-static
